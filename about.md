@@ -1,15 +1,22 @@
 ---
 layout: page
-title: About
-permalink: /about/
+permalink: /about/index.html
+title: Sujan Thakare
+tags: []
 ---
 
-This is the base Jekyll theme. You can find out more info about customizing your Jekyll theme, as well as basic Jekyll usage documentation at [jekyllrb.com](http://jekyllrb.com/)
+{% assign total_words = 0 %}
+{% assign total_readtime = 0 %}
+{% assign featuredcount = 0 %}
+{% assign statuscount = 0 %}
 
-You can find the source code for the Jekyll new theme at:
-{% include icon-github.html username="jglovier" %} /
-[jekyll-new](https://github.com/jglovier/jekyll-new)
+{% for post in site.posts %}
+    {% assign post_words = post.content | strip_html | number_of_words %}
+    {% assign readtime = post_words | append: '.0' | divided_by:200 %}
+    {% assign total_words = total_words | plus: post_words %}
+    {% assign total_readtime = total_readtime | plus: readtime %}
+    {% if post.featured %}
+    {% assign featuredcount = featuredcount | plus: 1 %}
+    {% endif %}
+{% endfor %}
 
-You can find the source code for Jekyll at
-{% include icon-github.html username="jekyll" %} /
-[jekyll](https://github.com/jekyll/jekyll)
