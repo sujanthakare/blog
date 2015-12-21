@@ -7,7 +7,6 @@ dropcap:	   true
 # Change url to your domain. Leave localhost server or blank when working locally.
 # or use the hint from http://jekyllrb.com/docs/github-pages/ to keep this the same 
 # whether working locally or remotely. Start Jekyll with: jekyll serve --baseurl ''
-url:
 url:"http://justreviewed.in"
 
 # Owner/author information
@@ -46,7 +45,7 @@ links:
 # http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
 timezone:    Asia/Mumbai
 future:      true
-highlighter: rouge
+highlighter: pygments
 markdown:    kramdown
 paginate:    5
 paginate_path: "page:num"
