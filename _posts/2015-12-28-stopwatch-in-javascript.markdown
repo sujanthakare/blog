@@ -24,26 +24,23 @@ We can use Module pattern and create stopwatch as a module.
 Advantage to use module pattern is we can create n number of stopwatch instaces and can use it anywhere in any JavaScript application.
 
 {% highlight javascript %}
+
 var stopWatch = function () {
     var me = this;
-
     me.timeremaining = 0;
     me.timeout = 0;
     me.timeoutCallback = undefined;
     me.timerId = undefined;
-
     var setStopWatch = function (time, timeout_callback) {
         me.timeout = time;
         me.timeremaining = time;
         me.timeoutCallback = timeout_callback;
         timer();
     }
-
     var timer = function () {
         if (me.timeremaining <= 0) {
             me.timeoutCallback();
             sec = 0;
-
         } else {
             sec++;
             me.timeremaining = me.timeremaining - 1000;
@@ -52,21 +49,17 @@ var stopWatch = function () {
             }, 1000);
         }
     }
-
     var pause = function () {
         clearTimeout(me.timerId);
     }
-    
     var resume = function () {
         timer();
     }
-    
     var reset = function () {
         pause();
         me.timeremaining = me.timeout;
         timer();
     }
-
     return {
         set: setStopWatch,
         pause: pause,
@@ -74,6 +67,7 @@ var stopWatch = function () {
         reset: reset
     }
 }
+
 {% endhighlight %}
 
 Ok our module is ready, now how to use it
