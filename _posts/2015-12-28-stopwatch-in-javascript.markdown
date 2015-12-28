@@ -23,7 +23,9 @@ for such kind of requirment stopwatch comes in the mind but there is no such sto
 We can use Module pattern and create stopwatch as a module.
 Advantage to use module pattern is we can create n number of stopwatch instaces and can use it anywhere in any JavaScript application.
 
-{% highlight javascript %}
+~~~ javascript
+
+
 var stopWatch = function () {
     var me = this;
 
@@ -74,7 +76,8 @@ var stopWatch = function () {
         reset: reset
     }
 }
-{% endhighlight %}
+~~~
+
 
 Ok our module is ready, now how to use it
 <br>
