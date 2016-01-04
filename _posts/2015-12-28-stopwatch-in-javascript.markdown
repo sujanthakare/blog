@@ -26,7 +26,7 @@ Advantage to use module pattern is we can create n number of stopwatch instaces 
 ~~~ javascript
 
 
-var stopWatch = function () {
+var stopwatch = function () {
     var me = this;
 
     me.timeremaining = 0;
@@ -44,10 +44,8 @@ var stopWatch = function () {
     var timer = function () {
         if (me.timeremaining <= 0) {
             me.timeoutCallback();
-            sec = 0;
 
         } else {
-            sec++;
             me.timeremaining = me.timeremaining - 1000;
             me.timerId = setTimeout(function () {
                 timer();
@@ -58,11 +56,9 @@ var stopWatch = function () {
     var pause = function () {
         clearTimeout(me.timerId);
     }
-    
     var resume = function () {
         timer();
     }
-    
     var reset = function () {
         pause();
         me.timeremaining = me.timeout;
@@ -91,7 +87,7 @@ Now set the stopwatch by setting time and callback function. whatever you want t
 
 ~~~javascript
 yourStopWatch.set(10000,function(){
-    console.log("Yeeee, my stop watch worked");
+    console.log("Yeeee, after 1000 milisecond");
 })
 ~~~
 
@@ -105,6 +101,77 @@ yourStopWatch.resume();
 yourStopWatch.reset();
 ~~~
 
-It's super easy to use in any javascript framework,
+It's super easy to use in any javascript framework like angularJs.
+
+# Stopwatch using ExtJs
+
+
+Let's see it using ExtJs, ExtJs is one of the mature javascript framework. ExtJs is derived from YUI library, YUI is totally based on module pattern.
+
+Let's write the code with same logic and understand how to use it.
+
+~~~ javascript
+
+Ext.define('Stopwatch', {
+    timeremaining: 0,
+    timeout: 0,
+    timeoutCallback: undefined,
+    timerId: undefined,
+    set: function (time, timeout_callback) {
+        var me = this;
+        me.timeout = time;
+        me.timeremaining = time;
+        me.timeoutCallback = timeout_callback;
+        me.timer();
+    },
+    timer: function () {
+        var me = this;
+        if (me.timeremaining <= 0) {
+            me.timeoutCallback();
+
+        } else {
+            me.timeremaining = me.timeremaining - 1000;
+            me.timerId = setTimeout(function () {
+                me.timer();
+            }, 1000);
+        }
+    },
+    pause: function () {
+        var me = this;
+        clearTimeout(me.timerId);
+    },
+    resume: function () {
+        var me = this;
+        me.timer();
+    },
+    reset: function () {
+        var me = this;
+        me.pause();
+        me.timeremaining = me.timeout;
+        me.timer();
+    }
+});
+
+
+~~~
+
+Here we defined a class named Stopwatch. now we have an ExtJs class and we can instantiate this class anywhere in ExtJs application,
+If you want stopwatch should have single instance through out the application, make it singletone.
+
+Let's create instace of stopwatch
+
+~~~ javascript
+var stopwatch = Ext.create('Stopwatch');
+~~~
+
+Now set the stopwatch by setting time and callback function. whatever you want to execute after timeout put in callback function.
+
+~~~ javascript
+stopwatch.set(1000, function(){
+   console.log("Yeeee, after 1000 milisecond");
+});
+~~~
+
+By using this logic you can create stopwatch in any framework and language.
 
 All rights are not reserved, so feel free to copy and share...٩(•̮̮̃-̃)۶  
