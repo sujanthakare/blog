@@ -106,54 +106,53 @@ It's super easy to use in any javascript framework like angularJs.
 # Stopwatch using ExtJs
 
 
-Let's see it using ExtJs, ExtJs is one of the mature javascript framework. ExtJs is derived from YUI library, YUI is totally based on module pattern.
+Let's see it using ExtJs, ExtJs is one of the mature javascript framework. ExtJs is derived from YUI library, YUI is totally based on module pattern. so it will have same structure as in above code snippet. 
 
 Let's write the code with same logic and understand how to use it.
 
-~~~ javascript
+{% highlight javascript linenos %}
+    
+    Ext.define('Stopwatch', {
+        timeremaining: 0,
+        timeout: 0,
+        timeoutCallback: undefined,
+        timerId: undefined,
+        set: function (time, timeout_callback) {
+            var me = this;
+            me.timeout = time;
+            me.timeremaining = time;
+            me.timeoutCallback = timeout_callback;
+            me.timer();
+        },
+        timer: function () {
+            var me = this;
+            if (me.timeremaining <= 0) {
+                me.timeoutCallback();
 
-Ext.define('Stopwatch', {
-    timeremaining: 0,
-    timeout: 0,
-    timeoutCallback: undefined,
-    timerId: undefined,
-    set: function (time, timeout_callback) {
-        var me = this;
-        me.timeout = time;
-        me.timeremaining = time;
-        me.timeoutCallback = timeout_callback;
-        me.timer();
-    },
-    timer: function () {
-        var me = this;
-        if (me.timeremaining <= 0) {
-            me.timeoutCallback();
-
-        } else {
-            me.timeremaining = me.timeremaining - 1000;
-            me.timerId = setTimeout(function () {
-                me.timer();
-            }, 1000);
+            } else {
+                me.timeremaining = me.timeremaining - 1000;
+                me.timerId = setTimeout(function () {
+                    me.timer();
+                }, 1000);
+            }
+        },
+        pause: function () {
+            var me = this;
+            clearTimeout(me.timerId);
+        },
+        resume: function () {
+            var me = this;
+            me.timer();
+        },
+        reset: function () {
+            var me = this;
+            me.pause();
+            me.timeremaining = me.timeout;
+            me.timer();
         }
-    },
-    pause: function () {
-        var me = this;
-        clearTimeout(me.timerId);
-    },
-    resume: function () {
-        var me = this;
-        me.timer();
-    },
-    reset: function () {
-        var me = this;
-        me.pause();
-        me.timeremaining = me.timeout;
-        me.timer();
-    }
-});
+    });
 
-
-~~~
+{% endhighlight %}
 
 Here we defined a class named Stopwatch. now we have an ExtJs class and we can instantiate this class anywhere in ExtJs application,
 If you want stopwatch should have single instance through out the application, make it singletone.
