@@ -23,83 +23,88 @@ for such kind of requirment stopwatch comes in the mind but there is no such sto
 We can use Module pattern and create stopwatch as a module.
 Advantage to use module pattern is we can create n number of stopwatch instaces and can use it anywhere in any JavaScript application.
 
-~~~ javascript
+{% highlight javascript %}
 
 
-var stopwatch = function () {
-    var me = this;
+    var stopwatch = function () {
+        var me = this;
 
-    me.timeremaining = 0;
-    me.timeout = 0;
-    me.timeoutCallback = undefined;
-    me.timerId = undefined;
+        me.timeremaining = 0;
+        me.timeout = 0;
+        me.timeoutCallback = undefined;
+        me.timerId = undefined;
 
-    var setStopWatch = function (time, timeout_callback) {
-        me.timeout = time;
-        me.timeremaining = time;
-        me.timeoutCallback = timeout_callback;
-        timer();
-    }
+        var setStopWatch = function (time, timeout_callback) {
+            me.timeout = time;
+            me.timeremaining = time;
+            me.timeoutCallback = timeout_callback;
+            timer();
+        }
 
-    var timer = function () {
-        if (me.timeremaining <= 0) {
-            me.timeoutCallback();
+        var timer = function () {
+            if (me.timeremaining <= 0) {
+                me.timeoutCallback();
 
-        } else {
-            me.timeremaining = me.timeremaining - 1000;
-            me.timerId = setTimeout(function () {
-                timer();
-            }, 1000);
+            } else {
+                me.timeremaining = me.timeremaining - 1000;
+                me.timerId = setTimeout(function () {
+                    timer();
+                }, 1000);
+            }
+        }
+
+        var pause = function () {
+            clearTimeout(me.timerId);
+        }
+        var resume = function () {
+            timer();
+        }
+        var reset = function () {
+            pause();
+            me.timeremaining = me.timeout;
+            timer();
+        }
+
+        return {
+            set: setStopWatch,
+            pause: pause,
+            resume: resume,
+            reset: reset
         }
     }
-
-    var pause = function () {
-        clearTimeout(me.timerId);
-    }
-    var resume = function () {
-        timer();
-    }
-    var reset = function () {
-        pause();
-        me.timeremaining = me.timeout;
-        timer();
-    }
-
-    return {
-        set: setStopWatch,
-        pause: pause,
-        resume: resume,
-        reset: reset
-    }
-}
-~~~
+{% endhighlight %}
 
 
 Ok our module is ready, now how to use it
 <br>
 first create your stopwatch instance
 
-~~~javascript
-var yourStopWatch = new stopWatch();
-~~~
+{% highlight javascript %}
+
+    var yourStopWatch = new stopWatch();
+
+{% endhighlight %}
 
 Now set the stopwatch by setting time and callback function. whatever you want to execute after timeout put in callback function.
 
-~~~javascript
-yourStopWatch.set(10000,function(){
-    console.log("Yeeee, after 1000 milisecond");
-})
-~~~
+{% highlight javascript %}
+
+    yourStopWatch.set(10000,function(){
+        console.log("Yeeee, after 1000 milisecond");
+    })
+{% endhighlight %}
 
 In between if you want to pause, resume and reset the stopwatch just call 
 
-~~~javascript
-yourStopWatch.pause();
+{% highlight javascript %}
 
-yourStopWatch.resume();
+    yourStopWatch.pause();
 
-yourStopWatch.reset();
-~~~
+    yourStopWatch.resume();
+
+    yourStopWatch.reset();
+
+{% endhighlight %}
 
 It's super easy to use in any javascript framework like angularJs.
 
@@ -110,7 +115,7 @@ Let's see it using ExtJs, ExtJs is one of the mature javascript framework. ExtJs
 
 Let's write the code with same logic and understand how to use it.
 
-{% highlight javascript linenos %}
+{% highlight javascript %}
     
     Ext.define('Stopwatch', {
         timeremaining: 0,
@@ -159,17 +164,20 @@ If you want stopwatch should have single instance through out the application, m
 
 Let's create instace of stopwatch
 
-~~~ javascript
-var stopwatch = Ext.create('Stopwatch');
-~~~
+{% highlight javascript %}
+
+    var stopwatch = Ext.create('Stopwatch');
+
+{% endhighlight %}
 
 Now set the stopwatch by setting time and callback function. whatever you want to execute after timeout put in callback function.
 
-~~~ javascript
-stopwatch.set(1000, function(){
-   console.log("Yeeee, after 1000 milisecond");
-});
-~~~
+{% highlight javascript %}
+    
+    stopwatch.set(1000, function(){
+       console.log("Yeeee, after 1000 milisecond"); 
+    });
+{% endhighlight %}
 
 By using this logic you can create stopwatch in any framework and language.
 
