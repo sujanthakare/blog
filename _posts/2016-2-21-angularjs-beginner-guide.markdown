@@ -1,7 +1,7 @@
 ---
 author: SujanThakare
 layout: post
-title: "AngularJs Beginner Guide Part I"
+title: "Angular Js Beginner Guide Part I"
 date: 2016-2-21 21:00
 comments: false
 category: AngularJs
